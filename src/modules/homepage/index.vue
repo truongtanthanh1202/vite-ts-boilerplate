@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld/index.vue';
+import HelloWorld from '@/components/HelloWorld/index.vue';
 import { foo } from '@/constants';
 
 console.log(foo);
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <img alt="Vue logo" src="@/assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
 

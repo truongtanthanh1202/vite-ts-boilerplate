@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { useCounterStore } from '@/store';
+
+const counter = useCounterStore();
+
 defineProps<{ msg: string }>();
 
-const count = ref(0);
+const timer = ref(0);
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
-  <button type="button" @click="count++">count is: {{ count }}</button>
+  <p>Store counter: {{ counter.payload }}</p>
+  <button type="button" @click="counter.increment">Increment</button>
+
+  <button type="button" @click="timer++">timer is: {{ timer }}</button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
