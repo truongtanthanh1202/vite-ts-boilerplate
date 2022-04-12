@@ -6,10 +6,10 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint:js": "eslint -c .eslintrc.js \"./src/**/*.{js,ts,vue}\" --ignore-path .gitignore .",
+    "lint:script": "eslint -c .eslintrc.js \"./src/**/*.{js,ts,vue}\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check \"src/**/*+(js|ts|vue|scss)\"",
-    "lint": "npm run lint:js && npm run lint:prettier",
-    "lintfix": "prettier --write --list-different \"src/**/*+(js|ts|vue|scss)\" && npm run lint:js -- --fix",
+    "lint": "npm run lint:script && npm run lint:prettier",
+    "lintfix": "prettier --write --list-different \"src/**/*+(js|ts|vue|scss)\" && npm run lint:script -- --fix",
     "prepare": "husky install"
   },
   "dependencies": {
