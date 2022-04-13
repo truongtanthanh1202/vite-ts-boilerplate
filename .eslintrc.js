@@ -11,7 +11,7 @@ module.exports = {
     '@vue/prettier',
   ],
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2021,
   },
   rules: {
     'lodash/prefer-lodash-method': 'off',
@@ -38,7 +38,7 @@ module.exports = {
       },
     ],
     'arrow-spacing': ['warn'],
-    'spaced-comment': ['warn', 'always'],
+    'spaced-comment': ['warn', 'always', { markers: ['/'] }],
     'space-in-parens': ['warn', 'never'],
     'object-curly-spacing': ['warn', 'always'],
     'no-trailing-spaces': 'warn',
@@ -70,8 +70,9 @@ module.exports = {
     eqeqeq: ['warn', 'always'],
     camelcase: 'off',
 
-    // typescript
+    // typescript-eslint
     '@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'none' }],
+    '@typescript-eslint/no-explicit-any': 'off',
 
     // vue
     'vue/attribute-hyphenation': 'off',

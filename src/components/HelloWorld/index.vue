@@ -2,15 +2,19 @@
 import { ref } from 'vue';
 
 import { useCounterStore } from '@/store';
-import { foo } from '@/constants';
-
-console.log(foo);
+import { authService } from '@/services';
 
 const counter = useCounterStore();
 
 defineProps<{ msg: string }>();
 
 const timer = ref(0);
+
+const handleLogin = async () => {
+  const res = await authService.login('vietanh@gmail.com', '12');
+
+  console.log(res);
+};
 </script>
 
 <template>
@@ -25,8 +29,9 @@ const timer = ref(0);
 
     <p>Store counter: {{ counter.payload }}</p>
     <button type="button" @click="counter.increment">Increment store</button>
-
     <button type="button" @click="timer++">timer is: {{ timer }}</button>
+
+    <button type="button" @click="handleLogin">Try test service</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test hot module replacement.
