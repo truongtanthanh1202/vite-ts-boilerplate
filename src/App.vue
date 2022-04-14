@@ -3,8 +3,6 @@ import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 
 import DefaultLayout from '@/layouts/default/index.vue';
-// import defaultNoHeaderLayout from '@/layouts/defaultNoHeader/index.vue';
-
 const route = useRoute();
 console.log(route.meta.layout);
 
