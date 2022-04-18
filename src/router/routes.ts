@@ -6,13 +6,12 @@ import NotFound from '@/modules/notFound/index.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '',
     name: RouteName.HOMEPAGE,
     component: Homepage,
-    meta: { layout: 'default' },
   },
   {
-    path: '/about',
+    path: 'about',
     name: RouteName.ABOUT,
     component: () => import('@/modules/about/index.vue'),
     meta: { layout: 'defaultNoHeader' },

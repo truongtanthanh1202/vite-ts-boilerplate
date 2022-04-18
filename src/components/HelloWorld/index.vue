@@ -9,7 +9,6 @@ const counter = useCounterStore();
 defineProps<{ msg: string }>();
 
 const timer = ref(0);
-console.log(1234);
 
 const handleLogin = async () => {
   const res = await authService.login('vietanh@gmail.com', '12');

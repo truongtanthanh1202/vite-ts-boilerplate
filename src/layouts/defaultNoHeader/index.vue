@@ -1,5 +1,5 @@
 <template>
   <div id="__main">
-    <slot />
+    <router-view />
   </div>
 </template>

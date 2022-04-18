@@ -1,7 +1,7 @@
 <template>
   <div id="__main">
     <div id="__header">Header</div>
-    <slot />
+    <router-view />
     <div id="__footer">Footer</div>
   </div>
 </template>
