@@ -1,23 +1,35 @@
 module.exports = {
   root: true,
+
   env: {
     node: true,
     'vue/setup-compiler-macros': true,
   },
+
   extends: [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/typescript/recommended',
     '@vue/prettier',
+    'prettier',
   ],
+
   parserOptions: {
     ecmaVersion: 2021,
   },
+
+  plugins: ['@typescript-eslint', 'prettier'],
+
   rules: {
+    // prettier
+    'prettier/prettier': 'warn',
+
+    // lodash
     'lodash/prefer-lodash-method': 'off',
     'lodash/import-scope': 'off',
     'lodash/prefer-noop': 'off',
 
+    // eslint
     'arrow-parens': 'off',
     'import/order': 'off',
     'comma-dangle': 'off',
@@ -27,7 +39,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'block-scoped-var': 'error',
     'no-param-reassign': 'error',
-    semi: ['warn', 'always'],
     'space-before-function-paren': ['off', 'never'],
     'key-spacing': [
       'warn',
@@ -47,7 +58,6 @@ module.exports = {
     'no-useless-concat': 'warn',
     'prefer-const': 'error',
     yoda: ['warn', 'never', { exceptRange: true }],
-    // "indent": ["warn", 2, { "SwitchCase": 1 }],
     quotes: ['warn', 'single', { avoidEscape: true }],
     'max-len': [
       'warn',

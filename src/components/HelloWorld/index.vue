@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Button as GButton } from 'ant-design-vue';
 
 import { useCounterStore } from '@/store';
 import { authService } from '@/services';
@@ -8,7 +9,7 @@ const counter = useCounterStore();
 
 defineProps<{ msg: string }>();
 
-const timer = ref(0);
+const timer = ref<any>(0);
 
 const handleLogin = async () => {
   const res = await authService.login('vietanh@gmail.com', '12');
@@ -26,6 +27,7 @@ const handleLogin = async () => {
     </div>
 
     <h1>{{ msg }}</h1>
+    <GButton type="primary">Click me</GButton>
 
     <p>Store counter: {{ counter.payload }}</p>
     <button type="button" @click="counter.increment">Increment store</button>
