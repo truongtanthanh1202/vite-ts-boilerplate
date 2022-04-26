@@ -1,1 +1,8 @@
-@import 'ant-design-vue/dist/antd.css';
+// @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Override base SVG style to work with Ant Design
+svg {
+  vertical-align: initial;
+}

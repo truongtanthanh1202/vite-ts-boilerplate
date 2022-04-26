@@ -28,6 +28,14 @@ const handleLogin = async () => {
 
     <h1>{{ msg }}</h1>
     <GButton type="primary">Click me</GButton>
+    <h1 class="text-3xl font-bold underline flex justify-end">Hello world!</h1>
+
+    <div class="container mx-auto">
+      <div class="columns-2">
+        <h1>Hello</h1>
+        <h2>Haha</h2>
+      </div>
+    </div>
 
     <p>Store counter: {{ counter.payload }}</p>
     <button type="button" @click="counter.increment">Increment store</button>
