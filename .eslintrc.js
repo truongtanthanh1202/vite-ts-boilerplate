@@ -92,5 +92,6 @@ module.exports = {
     'vue/html-indent': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/require-v-for-key': 'off',
   },
 };

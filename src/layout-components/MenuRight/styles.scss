@@ -1,0 +1,17 @@
+.menuItemBorder {
+  border-bottom: 1px solid rgb(196 196 196 / 50%);
+}
+
+.headline {
+  height: 75px;
+}
+
+.headlineHandle {
+  height: 58px;
+}
+
+.shopIssue {
+  &__item {
+    border-bottom: 1px solid rgb(196 196 196 / 50%);
+  }
+}

@@ -1,0 +1,11 @@
+#__main {
+  height: 100%;
+}
+
+#__content {
+  width: calc(100% - theme('width.80'));
+}
+
+#__menu {
+  border-left: 1px solid rgb(196 196 196 / 50%);
+}
