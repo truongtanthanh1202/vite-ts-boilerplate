@@ -24,10 +24,10 @@
     "no-empty-source": null,
     "color-function-notation": "modern",
     "value-keyword-case": ["lower", { "camelCaseSvgKeywords": true }],
-    "selector-pseudo-element-no-unknown": [
+    "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoElements": ["v-deep"]
+        "ignorePseudoClasses": ["deep"]
       }
     ]
   }
