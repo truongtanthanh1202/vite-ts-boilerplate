@@ -6,12 +6,12 @@
   ],
   "rules": {
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": [ true, {
-      "ignoreAtRules": [
-        "extends",
-        "tailwind"
-      ]
-    }],
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["extends", "tailwind"]
+      }
+    ],
     "comment-empty-line-before": "never",
     "rule-empty-line-before": [
       "always",
@@ -23,6 +23,12 @@
     "selector-id-pattern": null,
     "no-empty-source": null,
     "color-function-notation": "modern",
-    "value-keyword-case": ["lower", { "camelCaseSvgKeywords": true }]
+    "value-keyword-case": ["lower", { "camelCaseSvgKeywords": true }],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["v-deep"]
+      }
+    ]
   }
 }

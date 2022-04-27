@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld/index.vue';
+import { RouteName } from '@/shared/constants';
 </script>
 
 <template>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <div>
+    <router-link :to="{ name: RouteName.SHOP_LIVES }">Go go shop</router-link>
+  </div>
 </template>

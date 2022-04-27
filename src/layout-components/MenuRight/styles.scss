@@ -1,5 +1,7 @@
+$border-style: 1px solid rgb(196 196 196 / 50%);
+
 .menuItemBorder {
-  border-bottom: 1px solid rgb(196 196 196 / 50%);
+  border-bottom: $border-style;
 }
 
 .headline {
@@ -7,11 +9,32 @@
 }
 
 .headlineHandle {
-  height: 58px;
+  height: 56px;
 }
 
 .shopIssue {
-  &__item {
-    border-bottom: 1px solid rgb(196 196 196 / 50%);
+  .issueItem {
+    border-bottom: $border-style;
+
+    &--active {
+      background: #e5e5e5;
+    }
+  }
+}
+
+.shopTitle {
+  height: 56px;
+}
+
+.shopList {
+  .shopItem {
+    border-bottom: $border-style;
+
+    &__avatar {
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
   }
 }

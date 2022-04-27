@@ -6,20 +6,20 @@ import NotFound from '@/modules/notFound/index.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '',
-    name: RouteName.HOMEPAGE,
-    component: Homepage,
-  },
-  {
-    path: 'about',
-    name: RouteName.ABOUT,
-    component: () => import('@/modules/about/index.vue'),
-    meta: { layout: 'defaultNoHeader' },
-  },
-  {
     path: '/:pathMatch(.*)*',
     name: RouteName.NOT_FOUND,
     component: NotFound,
+  },
+  {
+    path: '',
+    name: RouteName.HOMEPAGE,
+    component: Homepage,
+    meta: { layout: 'defaultNoHeader' },
+  },
+  {
+    path: 'shop-lives',
+    name: RouteName.SHOP_LIVES,
+    component: () => import('@/modules/shopProblem/pages/Lives/index.vue'),
   },
 ];
 
