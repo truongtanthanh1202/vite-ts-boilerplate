@@ -58,10 +58,7 @@ const SHOPS = [
         class="shopItem flex items-center px-2 py-2 cursor-pointer"
       >
         <div class="shopItem__avatar mr-2">
-          <img
-            class="rounded-full object-cover"
-            src="https://chupanhvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2018/02/02090651/chup-anh-han-quoc-1-826x1024.jpg"
-          />
+          <img class="rounded-full object-cover" src="@/assets/images/avatar.jpg" />
         </div>
         <div class="min-w-0">
           <div class="font-medium">{{ shop.name }} | {{ shop.tel }}</div>
