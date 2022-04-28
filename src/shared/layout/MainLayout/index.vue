@@ -1,24 +1,28 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue';
+import { watch, ref, markRaw } from 'vue';
 import { useRoute } from 'vue-router';
+
 import DefaultLayout from '@/layouts/default/index.vue';
-import DefaultNoHeaderLayout from '@/layouts/defaultNoHeader/index.vue';
 
 const route = useRoute();
-
-const layoutName = ref<string>('default');
+const layoutComponent = ref();
 
 watch(
   route,
-  (to) => {
-    const layout = to.meta.layout || 'default';
-    layoutName.value = layout;
+  async (to) => {
+    const metaLayout = to.meta.layout || 'default';
+
+    try {
+      const component = metaLayout && (await import(`../../../layouts/${metaLayout}/index.vue`));
+      layoutComponent.value = markRaw(component?.default || DefaultLayout);
+    } catch (e) {
+      layoutComponent.value = markRaw(DefaultLayout);
+    }
   },
   { flush: 'pre', immediate: true, deep: true }
 );
 </script>
 
 <template>
-  <DefaultLayout v-if="layoutName === 'default'" />
-  <DefaultNoHeaderLayout v-else />
+  <component :is="layoutComponent"></component>
 </template>
