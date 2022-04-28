@@ -21,6 +21,11 @@ const routes: RouteRecordRaw[] = [
     name: RouteName.SHOP_LIVES,
     component: () => import('@/modules/shopProblem/pages/Lives/index.vue'),
   },
+  {
+    path: 'shop-new-registation',
+    name: RouteName.NEW_REGISTATION,
+    component: () => import('@/modules/shopProblem/pages/NewRegistation/index.vue'),
+  },
 ];
 
 export default routes;

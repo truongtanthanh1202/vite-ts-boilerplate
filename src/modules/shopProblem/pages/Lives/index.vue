@@ -39,8 +39,8 @@ import { DataTable } from '@/components';
       </Button>
     </div>
 
-    <div>
+    <!-- <div class="p-3">
       <DataTable></DataTable>
-    </div>
+    </div> -->
   </div>
 </template>

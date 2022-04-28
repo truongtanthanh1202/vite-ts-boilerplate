@@ -2,6 +2,8 @@
 import { Button } from 'ant-design-vue';
 import { RightOutlined } from '@ant-design/icons-vue';
 
+import { onMounted } from 'vue';
+
 const MENUS = [
   { name: 'Shop có lỗi phát sinh' },
   { name: 'Shop thiếu thông tin', active: true },
@@ -17,6 +19,10 @@ const SHOPS = [
   { name: 'Bùi Hà Phương', tel: '096***2931' },
   { name: 'Bùi Hà Phương', tel: '096***2931' },
 ];
+
+onMounted(() => {
+  console.log(123);
+});
 </script>
 
 <template>

@@ -4,6 +4,7 @@
 
 #__content {
   width: calc(100% - theme('width.80'));
+  overflow: auto;
 }
 
 #__menu {
