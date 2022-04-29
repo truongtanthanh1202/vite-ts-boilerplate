@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { authService } from '@/services';
 
@@ -24,10 +24,15 @@ function rejectErrorAndClearToken(error: AxiosError) {
   return Promise.reject(error);
 }
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.headers.common.Accept = 'application/json';
+const api: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 10000,
+  headers: {
+    Accept: 'application/json',
+  },
+});
 
-axios.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
     const accessToken = 'token';
     if (!config.headers) {
@@ -45,7 +50,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+api.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -53,7 +58,7 @@ axios.interceptors.response.use(
     const originalRequest = error.config;
 
     // Only handle when status == 401
-    if (error?.response.status !== 401) {
+    if (error?.response?.status !== 401) {
       return Promise.reject(error);
     }
 
@@ -73,7 +78,7 @@ axios.interceptors.response.use(
         failedQueue.push({ resolve, reject });
       })
         .then((token) => {
-          return axios(originalRequest);
+          return api(originalRequest);
         })
         .catch((err) => {
           return Promise.reject(err);
@@ -97,11 +102,11 @@ axios.interceptors.response.use(
 
     if (res && res?.code === 'SUCCESS') {
       processQueue(null, res.payload.access_token);
-      return Promise.resolve(axios(originalRequest));
+      return Promise.resolve(api(originalRequest));
     }
 
     return rejectErrorAndClearToken(error);
   }
 );
 
-export default axios;
+export default api;
