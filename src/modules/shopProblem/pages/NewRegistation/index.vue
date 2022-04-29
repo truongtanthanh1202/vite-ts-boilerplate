@@ -14,6 +14,9 @@ onMounted(() => {
 const dataSource = reactive<IDataSource>({
   loading: false,
   noDataText: 'Không có shop nào',
+  tableConfig: {
+    scroll: { y: 700 },
+  },
   paginator: {
     current: 1,
     total: 0,

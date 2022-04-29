@@ -23,6 +23,7 @@ function handleTableChange(pageData) {
 <template>
   <div>
     <Table
+      v-bind="dataSource.tableConfig"
       :dataSource="dataSource.data"
       :columns="dataSource.columns"
       bordered

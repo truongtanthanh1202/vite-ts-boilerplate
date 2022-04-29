@@ -1,4 +1,4 @@
-import type { TableColumnType, PaginationProps } from 'ant-design-vue';
+import type { TableColumnType, PaginationProps, TableProps } from 'ant-design-vue';
 
 export interface IColumn extends TableColumnType {
   scopedSlots?: string;
@@ -10,4 +10,5 @@ export interface IDataSource {
   data: any[];
   paginator: PaginationProps;
   columns: IColumn[];
+  tableConfig?: TableProps;
 }
