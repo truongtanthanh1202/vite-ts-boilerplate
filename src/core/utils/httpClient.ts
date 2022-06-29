@@ -1,5 +1,6 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
+import { IResponse, IErrorResponse } from '../interfaces';
 import { authService } from '@/services';
 
 let isRefreshing = false;
@@ -18,10 +19,18 @@ const processQueue = (error: AxiosError | null, token = null) => {
 };
 
 function rejectErrorAndClearToken(error: AxiosError) {
-  // Cookies.deleteAuthCookie();
-  // window.location.href = '/';
-
   return Promise.reject(error);
+}
+
+function tranformRespose(res: AxiosResponse): IResponse {
+  const success = res.data?.code === 'SUCCESS' ? true : false;
+  const errorText = success ? null : res.data?.message;
+  return { data: res.data.payload, statusCode: res.status, success, errorText };
+}
+
+function tranformError(res?: AxiosResponse<any, any>): IErrorResponse {
+  const errorText = res?.data?.message;
+  return { data: res?.data.payload, statusCode: res?.status, success: false, errorText };
 }
 
 const api: AxiosInstance = axios.create({
@@ -51,15 +60,17 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => {
-    return response;
+  (response: AxiosResponse): IResponse => {
+    return tranformRespose(response);
   },
-  async (error) => {
-    const originalRequest = error.config;
+  async (error: AxiosError) => {
+    const originalRequest: any = error.config;
 
     // Only handle when status == 401
     if (error?.response?.status !== 401) {
-      return Promise.reject(error);
+      const tranformedErrorResponse = tranformError(error?.response);
+
+      return Promise.reject(tranformedErrorResponse);
     }
 
     // Clear token and throw error when retried

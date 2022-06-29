@@ -51,13 +51,15 @@ async function getList(page = 1) {
     .getNewRegistationList({ page, per_page: dataSource.paginator.pageSize })
     .finally(() => (dataSource.loading = false));
 
-  if (res.code === 'SUCCESS') {
-    dataSource.data = res.payload.data;
+  console.log('resInCom', res);
+
+  if (res.success) {
+    dataSource.data = res.data.data;
     dataSource.paginator = {
       ...dataSource.paginator,
-      total: res.payload.total,
-      current: res.payload.current_page,
-      pageSize: parseInt(res.payload.per_page),
+      total: res.data.total,
+      current: res.data.current_page,
+      pageSize: parseInt(res.data.per_page),
     };
   }
 }
