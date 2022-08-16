@@ -2,7 +2,7 @@ export interface IResponse {
   data?: any;
   statusCode?: number;
   success: boolean;
-  errorText: string | null;
+  message?: string;
 }
 
 export interface IErrorResponse extends IResponse {

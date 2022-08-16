@@ -23,14 +23,24 @@ function rejectErrorAndClearToken(error: AxiosError) {
 }
 
 function tranformRespose(res: AxiosResponse): IResponse {
-  const success = res.data?.code === 'SUCCESS' ? true : false;
-  const errorText = success ? null : res.data?.message;
-  return { data: res.data.payload, statusCode: res.status, success, errorText };
+  const resData = res.data || {};
+  const success = resData.code === 'SUCCESS' ? true : false;
+  return {
+    success,
+    data: resData.payload,
+    statusCode: res.status,
+    message: resData.message,
+  };
 }
 
 function tranformError(res?: AxiosResponse<any, any>): IErrorResponse {
-  const errorText = res?.data?.message;
-  return { data: res?.data.payload, statusCode: res?.status, success: false, errorText };
+  const resData = res?.data || {};
+  return {
+    success: false,
+    data: resData.payload,
+    statusCode: resData.status,
+    message: resData.message,
+  };
 }
 
 const api: AxiosInstance = axios.create({
@@ -41,23 +51,18 @@ const api: AxiosInstance = axios.create({
   },
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const accessToken = 'token';
-    if (!config.headers) {
-      return config;
-    }
-
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
+api.interceptors.request.use((config) => {
+  const accessToken = 'token';
+  if (!config.headers) {
     return config;
-  },
-  (error) => {
-    Promise.reject(error);
   }
-);
+
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  return config;
+});
 
 api.interceptors.response.use(
   (response: AxiosResponse): IResponse => {
@@ -68,9 +73,7 @@ api.interceptors.response.use(
 
     // Only handle when status == 401
     if (error?.response?.status !== 401) {
-      const tranformedErrorResponse = tranformError(error?.response);
-
-      return Promise.reject(tranformedErrorResponse);
+      return tranformError(error?.response);
     }
 
     // Clear token and throw error when retried

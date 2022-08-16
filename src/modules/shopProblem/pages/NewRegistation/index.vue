@@ -47,19 +47,19 @@ const dataSource = reactive<IDataSource>({
 
 async function getList(page = 1) {
   dataSource.loading = true;
-  const res = await shopService
+  const { success, data: shop } = await shopService
     .getNewRegistationList({ page, per_page: dataSource.paginator.pageSize })
     .finally(() => (dataSource.loading = false));
 
-  console.log('resInCom', res);
+  console.log('resInCom', shop);
 
-  if (res.success) {
-    dataSource.data = res.data.data;
+  if (success) {
+    dataSource.data = shop.data;
     dataSource.paginator = {
       ...dataSource.paginator,
-      total: res.data.total,
-      current: res.data.current_page,
-      pageSize: parseInt(res.data.per_page),
+      total: shop.total,
+      current: shop.current_page,
+      pageSize: parseInt(shop.per_page),
     };
   }
 }
