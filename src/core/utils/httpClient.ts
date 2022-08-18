@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
-import { IResponse, IErrorResponse } from '../interfaces';
+import { IResponse } from '../interfaces';
 import { authService } from '@/services';
 
 let isRefreshing = false;
@@ -28,24 +28,25 @@ function tranformRespose(res: AxiosResponse): IResponse {
   return {
     success,
     data: resData.payload,
-    statusCode: res.status,
+    statusCode: res?.status,
     message: resData.message,
   };
 }
 
-function tranformError(res?: AxiosResponse<any, any>): IErrorResponse {
+function tranformError(error: AxiosError<any, any>): IResponse {
+  const res = error.response;
   const resData = res?.data || {};
   return {
     success: false,
     data: resData.payload,
-    statusCode: resData.status,
-    message: resData.message,
+    statusCode: res?.status || error.code,
+    message: resData.message || error.message,
   };
 }
 
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     Accept: 'application/json',
   },
@@ -73,7 +74,7 @@ api.interceptors.response.use(
 
     // Only handle when status == 401
     if (error?.response?.status !== 401) {
-      return tranformError(error?.response);
+      return tranformError(error);
     }
 
     // Clear token and throw error when retried
