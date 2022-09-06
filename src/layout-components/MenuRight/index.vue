@@ -22,12 +22,12 @@ const SHOPS = [
 <template>
   <div class="menu flex flex-col overflow-hidden h-full">
     <div class="shrink-0">
-      <div class="headline menuItemBorder px-2 flex justify-between items-center">
+      <div class="menuItemBorder h-[75px] px-2 flex justify-between items-center">
         <h3 class="font-bold mb-0 text-[18px]">Công việc CS moshop</h3>
         <Button type="primary" class="rounded-md">Chốt ca</Button>
       </div>
 
-      <div class="headlineHandle menuItemBorder px-2 flex items-center">
+      <div class="menuItemBorder h-[56px] px-2 flex items-center">
         <h3 class="font-bold mb-0 text-[18px]">Cần xử lý</h3>
       </div>
 

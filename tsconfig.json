@@ -12,8 +12,10 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"]
   },

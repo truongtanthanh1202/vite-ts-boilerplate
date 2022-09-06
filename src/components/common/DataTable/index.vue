@@ -1,62 +1,42 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { toRefs } from 'vue';
 import { Table } from 'ant-design-vue';
 
-const dataSource = ref([
-  {
-    key: '1',
-    name: 'Mike',
-    age: 32,
-    address: '10 Downing Street',
-  },
-  {
-    key: '2',
-    name: 'John',
-    age: 42,
-    address: '10 Downing Street',
-  },
-]);
+import { IDataSource } from './types';
 
-const columns = ref([
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-]);
+interface IProps {
+  dataSource: IDataSource;
+}
+
+const props = defineProps<IProps>();
+const { dataSource } = toRefs(props);
+
+const emit = defineEmits<{
+  (e: 'tableChange', params): void;
+}>();
+
+function handleTableChange(pageData) {
+  emit('tableChange', pageData);
+}
 </script>
 
 <template>
   <div>
-    <Table :dataSource="dataSource" :columns="columns" bordered :pagination="{ current: 2, total: 50 }">
-      <!-- <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'name'">
-          <a>
-            {{ record.name }}
-          </a>
+    <Table
+      v-bind="dataSource.tableConfig"
+      :dataSource="dataSource.data"
+      :columns="dataSource.columns"
+      bordered
+      :pagination="dataSource.paginator"
+      :loading="dataSource.loading"
+      @change="handleTableChange"
+    >
+      <template #bodyCell="{ column, record, index }">
+        <template v-if="column.scopedSlots">
+          <slot :name="column.scopedSlots" :record="record" :column="column" :index="index"></slot>
         </template>
-        <template v-else-if="column.key === 'tags'">
-          <span>
-            <a-tag
-              v-for="tag in record.tags"
-              :key="tag"
-              :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
-            >
-              {{ tag.toUpperCase() }}
-            </a-tag>
-          </span>
-        </template>
-      </template> -->
+      </template>
+      <template #emptyText>{{ dataSource.noDataText || 'Không có dữ liệu' }}</template>
     </Table>
   </div>
 </template>

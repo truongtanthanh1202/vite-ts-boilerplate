@@ -1,31 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { Button } from 'ant-design-vue';
 import { SearchOutlined } from '@ant-design/icons-vue';
-
-// import type { IDataSource } from '@/components';
-import { DataTable } from '@/components';
-
-// const dataSource = ref<IDataSource>({
-//   extras: {
-//     processing: false,
-//     noDataText: 'Không có đơn hàng nào',
-//   },
-//   paginator: {
-//     textHint: 'ĐH',
-//     currentPage: 1,
-//     total: 0,
-//     perPage: 10,
-//   },
-//   data: [],
-//   columns: [
-//     {
-//       title: 'Thông tin shop',
-//       width: '16%',
-//       scopedSlots: 'shopInfo',
-//     },
-//   ],
-// });
 </script>
 
 <template>
@@ -37,10 +12,6 @@ import { DataTable } from '@/components';
         <SearchOutlined />
         Tìm kiếm
       </Button>
-    </div>
-
-    <div>
-      <DataTable></DataTable>
     </div>
   </div>
 </template>
