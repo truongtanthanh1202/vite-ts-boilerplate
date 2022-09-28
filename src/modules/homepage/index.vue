@@ -10,6 +10,7 @@ import { RouteName } from '@/shared/constants';
     <div class="py-4">
       <Button type="primary">Click me!</Button>
     </div>
-    <Foo />
+    <Foo :msg="'Chao ban'" />
+    <!-- <Foo :msg="Hello" /> -->
   </div>
 </template>
