@@ -19,7 +19,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "axios": "^0.26.1",
-    "custom-ant": "^1.0.23",
+    "custom-ant": "^1.0.24",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
     "pinia": "^2.0.28",
