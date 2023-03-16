@@ -24,12 +24,14 @@ function rejectErrorAndClearToken(error: AxiosError) {
 
 function tranformRespose(res: AxiosResponse): IResponse {
   const resData = res.data || {};
-  const success = resData.code === 'SUCCESS' ? true : false;
+  const success = !!resData.success;
   return {
     success,
-    data: resData.payload,
+    error: !success,
+    data: resData.data,
     statusCode: res?.status,
     message: resData.message,
+    rawResponse: res,
   };
 }
 
@@ -38,9 +40,11 @@ function tranformError(error: AxiosError<any, any>): IResponse {
   const resData = res?.data || {};
   return {
     success: false,
-    data: resData.payload,
+    error: true,
+    data: resData.data,
     statusCode: res?.status || error.code,
     message: resData.message || error.message,
+    rawResponse: res,
   };
 }
 
@@ -53,7 +57,7 @@ const api: AxiosInstance = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = 'token';
+  const accessToken = '';
   if (!config.headers) {
     return config;
   }
@@ -115,7 +119,7 @@ api.interceptors.response.use(
         isRefreshing = false;
       });
 
-    if (res && res?.code === 'SUCCESS') {
+    if (res && res?.success) {
       processQueue(null, res.payload.access_token);
       return Promise.resolve(api(originalRequest));
     }
