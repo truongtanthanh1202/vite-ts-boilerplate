@@ -22,7 +22,7 @@ module.exports = {
 
   rules: {
     // prettier
-    'prettier/prettier': 'warn',
+    'prettier/prettier': ['warn', { endOfLine: 'auto' }],
 
     // lodash
     'lodash/prefer-lodash-method': 'off',
