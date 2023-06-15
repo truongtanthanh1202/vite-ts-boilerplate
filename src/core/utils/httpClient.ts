@@ -22,7 +22,7 @@ function rejectErrorAndClearToken(error: AxiosError) {
   return Promise.reject(error);
 }
 
-function tranformRespose(res: AxiosResponse): IResponse {
+function transformRespose(res: AxiosResponse): IResponse {
   const resData = res.data || {};
   const success = !!resData.success;
   return {
@@ -71,7 +71,7 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response: AxiosResponse): IResponse => {
-    return tranformRespose(response);
+    return transformRespose(response);
   },
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
