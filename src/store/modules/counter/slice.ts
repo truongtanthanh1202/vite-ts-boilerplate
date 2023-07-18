@@ -6,7 +6,7 @@ export const useCounterStore = defineStore('counter', {
   state: () =>
     ({
       payload: 2,
-    } as ICounter),
+    }) as ICounter,
 
   actions: {
     increment() {

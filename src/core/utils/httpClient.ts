@@ -125,7 +125,7 @@ api.interceptors.response.use(
     }
 
     return rejectErrorAndClearToken(error);
-  }
+  },
 );
 
 export default api;
