@@ -2,10 +2,16 @@
 import { toRefs } from 'vue';
 import { Table } from 'ant-design-vue';
 
-import { IDataSource } from './types';
+import { IDataSource, IColumn } from './types';
 
 interface IProps {
   dataSource: IDataSource;
+}
+
+interface BodyCell {
+  record?: any;
+  index?: number;
+  column?: IColumn;
 }
 
 const props = defineProps<IProps>();
@@ -31,7 +37,7 @@ function handleTableChange(pageData) {
       :loading="dataSource.loading"
       @change="handleTableChange"
     >
-      <template #bodyCell="{ column, record, index }">
+      <template #bodyCell="{ record, index, column }: BodyCell">
         <template v-if="column.scopedSlots">
           <slot :name="column.scopedSlots" :record="record" :column="column" :index="index"></slot>
         </template>
