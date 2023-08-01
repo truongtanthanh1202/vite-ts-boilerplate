@@ -67,7 +67,7 @@ module.exports = {
         ignoreUrls: true,
         ignoreStrings: true,
         ignoreTemplateLiterals: true,
-        ignorePattern: 'd="([\\s\\S]*?)"',
+        ignorePattern: 'd="([\\s\\S]*?)"|class="([\\s\\S]*?)"',
       },
     ],
     'no-constant-condition': [
