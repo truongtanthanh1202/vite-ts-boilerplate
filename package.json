@@ -8,7 +8,7 @@
     "build:testing": "vue-tsc --noEmit && vite build --mode testing",
     "preview": "vite preview",
     "types-check": "vue-tsc --noEmit",
-    "lint:script": "eslint -c .eslintrc.js \"./src/**/*.{js,ts,vue}\" --ignore-path .gitignore .",
+    "lint:script": "eslint -c .eslintrc.js \"./src/**/*.{js,ts,vue}\" --ignore-path .gitignore",
     "lint:prettier": "prettier \"src/**/*+(js|ts|vue|scss)\" --ignore-path .gitignore",
     "lint:style": "stylelint src/**/*.{css,scss} -i .gitignore -i .stylelintignore",
     "lint": "npm run lint:script && npm run lint:prettier -- --check && npm run lint:style",
