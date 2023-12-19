@@ -1,3 +1,15 @@
+@import './variable.module';
+
 #__app {
   height: 100%;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: $font-family-theme;
 }

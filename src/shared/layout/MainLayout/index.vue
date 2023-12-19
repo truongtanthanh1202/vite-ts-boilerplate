@@ -6,16 +6,20 @@ import DefaultLayout from '@/layouts/default/index.vue';
 
 const route = useRoute();
 const layoutComponent = ref();
+const isLoaded = ref<boolean>(false);
 
 watch(
-  route,
-  async (to) => {
-    const metaLayout = to.meta.layout || 'default';
+  () => route.meta.layout,
+  async (layout) => {
+    isLoaded.value = false;
+    const metaLayout = layout || 'default';
 
     try {
       const component = metaLayout && (await import(`../../../layouts/${metaLayout}/index.vue`));
+      isLoaded.value = true;
       layoutComponent.value = markRaw(component?.default || DefaultLayout);
     } catch (e) {
+      isLoaded.value = true;
       layoutComponent.value = markRaw(DefaultLayout);
     }
   },
@@ -24,5 +28,5 @@ watch(
 </script>
 
 <template>
-  <component :is="layoutComponent"></component>
+  <component :is="layoutComponent" :isLoaded="isLoaded"></component>
 </template>

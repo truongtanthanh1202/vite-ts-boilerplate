@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 
 const ENV_PATH = './env';
 
@@ -8,7 +9,7 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, ENV_PATH) };
 
   return defineConfig({
-    plugins: [vue()],
+    plugins: [vue(), svgLoader()],
     resolve: {
       alias: {
         '@': resolve(__dirname, './src'),
