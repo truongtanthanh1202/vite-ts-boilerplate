@@ -85,6 +85,14 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
 
     // vue
+    'vue/v-on-event-hyphenation': [
+      'warn',
+      'never',
+      {
+        autofix: false,
+        ignore: [],
+      },
+    ],
     'vue/attribute-hyphenation': 'off',
     'vue/html-self-closing': 'off',
     'vue/singleline-html-element-content-newline': 'off',
