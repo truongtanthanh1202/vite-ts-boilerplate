@@ -9,7 +9,15 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, ENV_PATH) };
 
   return defineConfig({
-    plugins: [vue(), svgLoader()],
+    plugins: [
+      vue(),
+      svgLoader({
+        // https://github.com/jpkleemans/vite-svg-loader/issues/101
+        svgoConfig: {
+          plugins: ['prefixIds'],
+        },
+      }),
+    ],
     resolve: {
       alias: {
         '@': resolve(__dirname, './src'),
