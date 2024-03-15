@@ -2,16 +2,10 @@
 import { toRefs } from 'vue';
 import { Table } from 'ant-design-vue';
 
-import { IDataSource, IColumn } from './types';
+import { IDataSource } from './types';
 
 interface IProps {
   dataSource: IDataSource;
-}
-
-interface BodyCell {
-  record?: any;
-  index?: number;
-  column?: IColumn;
 }
 
 const props = defineProps<IProps>();

@@ -83,7 +83,7 @@ function handleLoadPage(params) {
     </div>
 
     <div class="p-3">
-      <DataTable :dataSource="dataSource" @table-change="handleLoadPage">
+      <DataTable :dataSource="dataSource" @tableChange="handleLoadPage">
         <template #shopInfo="{}">
           <div class="shopInfo">
             <div class="headline flex mb-2">
