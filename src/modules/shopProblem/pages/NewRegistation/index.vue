@@ -4,7 +4,7 @@ import { Button } from 'ant-design-vue';
 import { SearchOutlined } from '@ant-design/icons-vue';
 
 import type { IDataSource } from '@/components';
-import { DataTable } from '@/components';
+import { DataTable, ImageOrDefault } from '@/components';
 import { shopService } from '@/services';
 
 onMounted(() => {
@@ -75,6 +75,12 @@ function handleLoadPage(params) {
   <div class="page">
     <div class="headline text-[20px] px-3 py-5 flex justify-between items-center">
       <h3 class="font-medium mb-0">Shop đăng ký mới</h3>
+
+      <ImageOrDefault
+        src="https://jira.ghtklab.com/s/qmtxrc/820005/3e6sfg/_/jira-logo-scaled.png"
+        alt="hello"
+        class="w-14 h-14 rounded-full bg-ghtk"
+      />
 
       <Button type="primary" class="rounded-sm px-2">
         <SearchOutlined />
