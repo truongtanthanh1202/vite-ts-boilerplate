@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { size } from 'lodash-es';
+import { size } from 'lodash';
 import { asciify } from '@/helpers';
 import { StyleValue } from 'vue';
 
