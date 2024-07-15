@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse, AxiosInstance, InternalAxiosRequestCo
 
 import { IResponse } from '../interfaces';
 import { authService } from '@/services';
+import { jsonDecode } from '@/helpers';
 
 interface ConfigInstance {
   setAuthorizationFn?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig;
@@ -98,6 +99,8 @@ export class BaseClient {
       },
       async (error: AxiosError) => {
         const originalRequest: any = error.config;
+        const errorResponse: any = error?.response || {};
+        errorResponse.data = jsonDecode(errorResponse.data);
 
         // Only handle when status == 401
         if (error?.response?.status !== 401) {

@@ -19,3 +19,19 @@ export const asciify = (sstr: string, force: boolean = false) => {
   str = str.replace(/ +/g, ' '); // remove duplicate space to single
   return str;
 };
+
+export const jsonDecode = (str) => {
+  try {
+    return JSON.parse(str);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const jsonEncode = (data) => {
+  try {
+    return JSON.stringify(data);
+  } catch (error) {
+    return null;
+  }
+};
