@@ -61,7 +61,7 @@ export class BaseClient {
     };
   }
 
-  create({ setAuthorizationFn }: ConfigInstance) {
+  create({ setAuthorizationFn }: ConfigInstance = {}) {
     const defaultSetAuthorizationFn = (config) => {
       const token: string = 'token';
 
