@@ -2,10 +2,19 @@ import axios, { AxiosError, AxiosResponse, AxiosInstance, InternalAxiosRequestCo
 
 import { IResponse } from '../interfaces';
 import { authService } from '@/services';
-import { jsonDecode } from '@/helpers';
+import { isNotifyWhenFail, jsonDecode } from '@/helpers';
+import { message } from 'ant-design-vue';
 
 interface ConfigInstance {
   setAuthorizationFn?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig;
+}
+
+interface Constructor {
+  baseURL: string;
+  headers?: any;
+  noTransform?: boolean;
+  withActionRefresh?: boolean;
+  withActionLogout?: boolean;
 }
 
 export class BaseClient {
@@ -13,10 +22,16 @@ export class BaseClient {
   private failedQueue: any[] = [];
   baseURL: string = '';
   headers: any = {};
+  noTransform = false;
+  withActionRefresh = false;
+  withActionLogout = false;
 
-  constructor({ baseURL, headers }: { baseURL: string; headers?: any }) {
+  constructor({ baseURL, headers, noTransform, withActionRefresh, withActionLogout }: Constructor) {
     this.baseURL = baseURL;
     this.headers = headers;
+    this.noTransform = !!noTransform;
+    this.withActionRefresh = !!withActionRefresh;
+    this.withActionLogout = !!withActionLogout;
   }
 
   private processQueue(error: AxiosError | null, token = null) {
@@ -32,10 +47,18 @@ export class BaseClient {
   }
 
   private rejectErrorAndClearToken(error: AxiosError) {
-    return Promise.reject(error);
+    if (this.withActionLogout) {
+      //
+    }
+
+    return this.transformError(error);
   }
 
-  private transformResponse(res: AxiosResponse): IResponse {
+  private transformResponse(res: AxiosResponse): IResponse | AxiosResponse {
+    if (this.noTransform) {
+      return res;
+    }
+
     const resData = res.data || {};
     const success = !!resData.success;
     return {
@@ -80,6 +103,8 @@ export class BaseClient {
     });
 
     api.interceptors.request.use((config) => {
+      config.transformResponse = [(data) => data];
+
       if (!config.headers) {
         return config;
       }
@@ -95,15 +120,29 @@ export class BaseClient {
 
     api.interceptors.response.use(
       (response: AxiosResponse): any => {
+        response.data = jsonDecode(response.data);
+
+        if (isNotifyWhenFail(response)) {
+          message.error(response.data?.message);
+        }
+
         return this.transformResponse(response);
       },
       async (error: AxiosError) => {
         const originalRequest: any = error.config;
         const errorResponse: any = error?.response || {};
         errorResponse.data = jsonDecode(errorResponse.data);
+        const statusCode: any = error?.response?.status;
 
-        // Only handle when status == 401
-        if (error?.response?.status !== 401) {
+        if (isNotifyWhenFail(errorResponse) && [422, 400, 403, 402].includes(statusCode)) {
+          message.error(errorResponse.data?.message);
+        }
+
+        if (!this.withActionRefresh) {
+          if (statusCode === 401 && this.withActionLogout) {
+            return this.rejectErrorAndClearToken(error);
+          }
+
           return this.transformError(error);
         }
 
