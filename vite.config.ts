@@ -18,6 +18,13 @@ export default ({ mode }) => {
         },
       }),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler', // or "modern"
+        },
+      },
+    },
     resolve: {
       alias: {
         '@': resolve(__dirname, './src'),
