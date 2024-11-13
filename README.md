@@ -1,7 +1,7 @@
 # Setup devlopment
 
 ```
-npm i
+npm intall
 ```
 
 ```
