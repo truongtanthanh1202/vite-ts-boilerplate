@@ -15,7 +15,6 @@ export const authGuard = async ({
   redirectTo: any;
 }> => {
   const isEmptyToken = isNoTokenPresent();
-  console.log('isEmptyToken', isEmptyToken, to.name);
 
   if (to.name === RouteName.LOGIN && !isEmptyToken) {
     return {
