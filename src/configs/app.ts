@@ -1,6 +1,6 @@
 const env = import.meta.env;
 const config = {
-  appUrl: env.VITE_APP_URL || '',
+  appUrl: env.APP_URL || '',
   env: env.VITE_NODE_ENV || '',
   oidc: {
     clientId: env.VITE_OIDC_CLIENT_ID,

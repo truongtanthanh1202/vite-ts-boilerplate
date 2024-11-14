@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
     path: '',
     name: RouteName.Homepage,
     component: Homepage,
-    meta: { layout: 'defaultNoHeader' },
+    meta: { layout: 'default' },
   },
 ];
 

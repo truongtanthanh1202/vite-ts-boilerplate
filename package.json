@@ -14,7 +14,7 @@
     "lint:style": "stylelint src/**/*.{css,scss} -i .gitignore -i .stylelintignore",
     "lint": "npm run lint:script && npm run lint:prettier -- --check && npm run lint:style",
     "lintfix": "npm run lint:prettier -- --write && npm run lint:script -- --fix && npm run lint:style -- --fix",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
