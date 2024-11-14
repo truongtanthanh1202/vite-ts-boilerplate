@@ -1,7 +1,7 @@
 import { get, isArray, isEmpty, isNil, isString } from 'lodash';
 import { includes, some } from 'lodash';
 
-import { jsonDecode, jsonEncode, waitToFetchedAppData } from '@/helpers';
+import { jsonDecode, jsonEncode } from '@/helpers';
 import { RouteName, IdStorageName, ID_STORAGE_ALL } from '@/shared/constants';
 import config from '@/configs/app';
 
