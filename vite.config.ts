@@ -6,7 +6,7 @@ import svgLoader from 'vite-svg-loader';
 const ENV_PATH = './env';
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, ENV_PATH) };
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
     plugins: [
@@ -31,6 +31,9 @@ export default ({ mode }) => {
       },
     },
     envDir: resolve(__dirname, ENV_PATH),
+    preview: {
+      port: 3000,
+    },
     server: {
       port: parseInt(process.env.VITE_APP_PORT) || 3000,
     },
