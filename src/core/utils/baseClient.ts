@@ -48,7 +48,7 @@ export class BaseClient {
 
   private rejectErrorAndClearToken(error: AxiosError) {
     if (this.withActionLogout) {
-      //
+      // action logout
     }
 
     return this.transformError(error);
