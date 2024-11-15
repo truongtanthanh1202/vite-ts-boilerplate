@@ -15,5 +15,4 @@ function setAuthorizationFn(config: InternalAxiosRequestConfig) {
 export const marketingClient: AxiosInstance = new BaseClient({
   baseURL: `${import.meta.env.VITE_MARKERING_API}`,
   withActionLogout: true,
-  withActionRefresh: true,
 }).create({ setAuthorizationFn });

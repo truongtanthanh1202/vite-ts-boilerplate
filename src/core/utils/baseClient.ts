@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse, AxiosInstance, InternalAxiosRequestCo
 import { IResponse } from '../interfaces';
 import { authService } from '@/services';
 import { isNotifyWhenFail, jsonDecode } from '@/helpers';
+import { removeAppToken } from '../auth';
 import { message } from 'ant-design-vue';
 
 interface ConfigInstance {
@@ -47,8 +48,10 @@ export class BaseClient {
   }
 
   private rejectErrorAndClearToken(error: AxiosError) {
+    removeAppToken();
+
     if (this.withActionLogout) {
-      // action logout
+      window.location.href = `/login?returnUrl=${encodeURIComponent(window.location.pathname)}`;
     }
 
     return this.transformError(error);
