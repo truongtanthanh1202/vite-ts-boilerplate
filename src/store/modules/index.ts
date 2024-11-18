@@ -1,1 +1,1 @@
-export * from './counter/slice';
+export * from './shopNoti/slice';

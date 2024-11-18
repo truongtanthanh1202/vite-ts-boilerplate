@@ -7,3 +7,13 @@
 svg {
   vertical-align: initial;
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(0deg 2% 42% / 21%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}

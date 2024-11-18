@@ -1,0 +1,18 @@
+:deep(.ant-table-cell) {
+  vertical-align: top;
+}
+
+button {
+  border: none;
+  background-color: #f4f4f4;
+  font-size: 14px;
+  line-height: 20px;
+  width: 64px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px 8px;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}

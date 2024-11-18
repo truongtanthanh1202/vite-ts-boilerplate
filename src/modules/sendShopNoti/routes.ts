@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('./pages/HomeFeature/index.vue'),
       },
       {
-        path: 'list/:NotiId',
+        path: 'list/:notiId',
         name: RouteName.NOTIFY_CONFIG_DETAIL,
         component: () => import('./pages/CampaignDetail/index.vue'),
       },
