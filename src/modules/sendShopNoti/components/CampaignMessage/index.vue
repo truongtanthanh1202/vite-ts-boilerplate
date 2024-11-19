@@ -18,7 +18,7 @@
 
     <div>
       <div class="text-[#5c5c5c] font-medium mb-2">Nội dung chiến dịch</div>
-      <QuillEditor theme="snow" />
+      <QuillEditor v-model:content="content" theme="snow" toolbar="essential" />
     </div>
   </div>
 </template>
@@ -31,6 +31,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { ref } from 'vue';
 
 const tab = ref<number>();
+const content = ref<any>();
 </script>
 
 <style scoped lang="scss" src="./styles.scss"></style>

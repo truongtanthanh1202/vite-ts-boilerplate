@@ -12,6 +12,10 @@ class ShopNotiService {
   async getDetailNotiConfig(id): Promise<IResponse> {
     return await marketingClient.get(`api/v1/notification-configs/${id}`);
   }
+
+  async deleteConfig(id): Promise<IResponse> {
+    return await marketingClient.delete(`api/v1/notification-configs/${id}`);
+  }
 }
 
 export const shopNotiService = new ShopNotiService();

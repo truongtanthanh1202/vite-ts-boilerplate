@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { Table } from 'ant-design-vue';
+import { message, Table } from 'ant-design-vue';
 
 import { useRouter } from 'vue-router';
 import { notiPopup } from '@/shared/common';
@@ -75,11 +75,12 @@ import { useShopNotiStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { formatMoney } from '@/utils';
 import { CampaignStatus } from '../../constant';
+import { shopNotiService } from '@/services';
 
 const router = useRouter();
 const shopNotiStore = useShopNotiStore();
 
-const { isFetchingData, campaignData } = storeToRefs(shopNotiStore);
+const { isFetchingData, campaignData, notiFilter } = storeToRefs(shopNotiStore);
 
 const columns = [
   {
@@ -125,10 +126,12 @@ function getTitleStatus(value: number) {
 }
 
 function handleViewCampaign(id) {
-  router.push({ name: RouteName.NOTIFY_CONFIG_DETAIL, params: { notiId: 63 } });
+  router.push({ name: RouteName.NOTIFY_CONFIG_DETAIL, params: { notiId: id } });
 }
 
-function handleEditCampaign(id) {}
+function handleEditCampaign(id) {
+  router.push({ name: RouteName.NOTIFY_CONFIG_NEW, query: { id: id } });
+}
 
 function handleDeleteCampaign(id) {
   notiPopup.open({
@@ -137,10 +140,21 @@ function handleDeleteCampaign(id) {
     message: 'Bạn có chắc chắn muốn xoá chiến dịch này không?',
     confirmText: 'Xoá',
     closeText: 'Hủy',
-    confirmed: () => {
-      console.log('delete campaign', id);
+    confirmed: async () => {
+      const { error } = await shopNotiService.deleteConfig(id);
+      if (error) return;
+
+      message.success('Xóa config gửi thông báo thành công');
+      handleAfterDelete();
     },
   });
+}
+
+async function handleAfterDelete() {
+  notiFilter.value.page = 1;
+
+  await shopNotiStore.getCountCampaign();
+  await shopNotiStore.getListCampaign();
 }
 
 function handleCopyCampaign(id) {
