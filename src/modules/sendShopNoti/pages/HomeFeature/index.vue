@@ -12,7 +12,6 @@
         Chiến dịch
       </Button>
     </div>
-
     <div>
       <HeaderFilter />
     </div>
@@ -24,7 +23,13 @@
     <div
       class="h-14 shrink-0 px-4 flex items-center justify-start border-0 border-t border-solid border-[#E8E8E8] bg-white"
     >
-      <Pagination :total="100" :pageSize="10" :showSizeChanger="false" />
+      <Pagination
+        v-model:current="notiFilter.page"
+        :total="campaignData.total"
+        :pageSize="10"
+        :showSizeChanger="false"
+        @change="(page) => handleChangePage(page)"
+      />
     </div>
   </div>
 </template>
@@ -34,19 +39,31 @@ import { Button, Pagination } from 'ant-design-vue';
 import { PlusIcon } from '@/shared/icons';
 import { CampaignTable, HeaderFilter } from '../../components';
 
-import { shopNotiService } from '@/services';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { RouteName } from '@/shared/constants';
+import { useShopNotiStore } from '@/store';
+import { storeToRefs } from 'pinia';
 
 const router = useRouter();
+const shopNotiStore = useShopNotiStore();
+const { campaignData, notiFilter } = storeToRefs(shopNotiStore);
 
 onMounted(() => {
-  shopNotiService.getCountListNotiConfig({});
-  shopNotiService.getListNotiConfig({});
+  shopNotiStore.resetFilter();
+  getScreenData();
 });
+
+async function getScreenData() {
+  await shopNotiStore.getCountCampaign();
+  await shopNotiStore.getListCampaign();
+}
 
 function handleCreateCampaign() {
   router.push({ name: RouteName.NOTIFY_CONFIG_NEW });
+}
+
+async function handleChangePage(page) {
+  await shopNotiStore.getListCampaign();
 }
 </script>

@@ -1,0 +1,22 @@
+:deep(.ant-input) {
+  padding: 5px 11px;
+}
+
+:deep(.ant-radio-button-wrapper) {
+  height: 36px;
+  padding-block: 3px;
+  padding-inline: 12px;
+  border: none;
+  border-radius: 20px;
+  margin-right: 8px;
+  color: #5c5c5c;
+  background-color: #f4f4f4;
+
+  &:not(:first-child)::before {
+    display: none;
+  }
+}
+
+:deep(.ant-radio-button-wrapper-checked) {
+  font-weight: 500;
+}

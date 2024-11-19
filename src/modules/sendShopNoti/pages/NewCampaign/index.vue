@@ -40,6 +40,6 @@ const pageTitles = computed<string>(() => {
 });
 
 function handleBack() {
-  router.back();
+  router?.back();
 }
 </script>

@@ -1,15 +1,29 @@
 <template>
-  <Table :columns="columns" :data-source="data" :loading="isLoading" :pagination="false" :bordered="true">
+  <Table
+    :columns="columns"
+    :data-source="campaignData.data"
+    :loading="isFetchingData"
+    :pagination="false"
+    :bordered="false"
+  >
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'info'">
         <div class="flex flex-col gap-[5px] overflow-hidden">
           <div class="font-medium">Tên chiến dịch: {{ record.info?.name }}</div>
-          <div>Thời gian tạo: {{ dayjs(record.info?.createAt).format('HH:mm:ss DD:MM:YYYY') }}</div>
+          <div>Thời gian tạo: {{ record.info?.createAt }}</div>
           <div>
-            Đối tượng: {{ record.info?.shopInfo?.counts }} shop | Loại shop:
-            {{ join(record.info?.shopInfo?.types, ', ') }}
+            Đối tượng: {{ record.info?.shopInfo?.counts || '--' }} shop | Loại shop:
+            {{ !size(record.info?.shopInfo?.types) ? '--' : join(record.info?.shopInfo?.types, ', ') }}
           </div>
-          <div class="text-sm px-1.5 rounded-sm bg-[#ABABAB] max-w-fit text-white">Chưa kích hoạt gửi</div>
+          <div
+            class="text-sm px-1.5 rounded-sm bg-[#ABABAB] max-w-fit text-white"
+            :class="{
+              'bg-[#F18E32]': record.info?.status === CampaignStatus.SCHEDULED,
+              'bg-ghtk': record.info?.status === CampaignStatus.ACTIVE,
+            }"
+          >
+            {{ getTitleStatus(record.info?.status) }}
+          </div>
         </div>
       </template>
 
@@ -20,26 +34,30 @@
       </template>
 
       <template v-if="column.key === 'successMessage'">
-        <div>
-          {{ record.successMessage }}
-        </div>
+        <div>{{ record.successMessage.total }} tin | {{ record.successMessage.rate }} %</div>
       </template>
 
       <template v-if="column.key === 'openRate'">
-        <div class="flex justify-center">{{ record.openRate }}</div>
+        <div>{{ record.openRate ? `${record.openRate} %` : '--' }}</div>
       </template>
 
       <template v-if="column.key === 'totalCost'">
         <div>
-          {{ record.totalCost }}
+          {{ record.totalCost ? formatMoney(record.totalCost) : '--' }}
         </div>
       </template>
 
       <template v-if="column.key === 'action'">
         <div class="shrink-0 flex flex-col gap-3">
-          <button @click="handleViewCampaign">Xem</button>
-          <button @click="handleDeleteCampaign">Xoá</button>
-          <button @click="handleCopyCampaign">Copy</button>
+          <button @click="handleViewCampaign(record?.id)">Xem</button>
+          <button
+            v-if="record.info?.status !== CampaignStatus.ACTIVE"
+            @click="handleEditCampaign(record?.id)"
+          >
+            Sửa
+          </button>
+          <button @click="handleDeleteCampaign(record?.id)">Xoá</button>
+          <button @click="handleCopyCampaign(record?.id)">Copy</button>
         </div>
       </template>
     </template>
@@ -51,14 +69,17 @@ import { Table } from 'ant-design-vue';
 
 import { useRouter } from 'vue-router';
 import { notiPopup } from '@/shared/common';
-import dayjs from 'dayjs';
-import { join } from 'lodash';
-import { ref } from 'vue';
+import { join, size } from 'lodash';
 import { RouteName } from '@/shared/constants';
+import { useShopNotiStore } from '@/store';
+import { storeToRefs } from 'pinia';
+import { formatMoney } from '@/utils';
+import { CampaignStatus } from '../../constant';
 
 const router = useRouter();
+const shopNotiStore = useShopNotiStore();
 
-const isLoading = ref<boolean>(false);
+const { isFetchingData, campaignData } = storeToRefs(shopNotiStore);
 
 const columns = [
   {
@@ -97,68 +118,19 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    info: {
-      name: 'Hàng nặng cồng kềnh',
-      createAt: '08:05:29 04/10/2024',
-      shopInfo: {
-        types: ['VIP', 'Pro'],
-        counts: 350,
-      },
-      status: 0,
-    },
-    notiType: 'Tin nhắn Gchat',
-    successMessage: {
-      total: 500,
-      rate: 90,
-    },
-    openRate: 90,
-    totalCost: 100000,
-  },
-  {
-    info: {
-      name: 'Hàng nặng cồng kềnh',
-      createAt: '08:05:29 04/10/2024',
-      shopInfo: {
-        types: ['VIP', 'Pro'],
-        counts: 350,
-      },
-      status: 0,
-    },
-    notiType: 'Tin nhắn Gchat',
-    successMessage: {
-      total: 500,
-      rate: 90,
-    },
-    openRate: 90,
-    totalCost: 100000,
-  },
-  {
-    info: {
-      name: 'Hàng nặng cồng kềnh',
-      createAt: '08:05:29 04/10/2024',
-      shopInfo: {
-        types: ['VIP', 'Pro'],
-        counts: 350,
-      },
-      status: 0,
-    },
-    notiType: 'Tin nhắn Gchat',
-    successMessage: {
-      total: 500,
-      rate: 90,
-    },
-    openRate: 90,
-    totalCost: 100000,
-  },
-];
+function getTitleStatus(value: number) {
+  if (value === CampaignStatus.NOT_ACTIVE) return 'Chưa kích hoạt gửi';
+  if (value === CampaignStatus.SCHEDULED) return 'Đã hẹn lịch';
+  if (value === CampaignStatus.ACTIVE) return 'Đã kích hoạt gửi';
+}
 
-function handleViewCampaign() {
+function handleViewCampaign(id) {
   router.push({ name: RouteName.NOTIFY_CONFIG_DETAIL, params: { notiId: 63 } });
 }
 
-function handleDeleteCampaign() {
+function handleEditCampaign(id) {}
+
+function handleDeleteCampaign(id) {
   notiPopup.open({
     type: 'confirm',
     title: 'Xoá chiến dịch',
@@ -166,12 +138,12 @@ function handleDeleteCampaign() {
     confirmText: 'Xoá',
     closeText: 'Hủy',
     confirmed: () => {
-      console.log('delete campaign');
+      console.log('delete campaign', id);
     },
   });
 }
 
-function handleCopyCampaign() {
+function handleCopyCampaign(id) {
   router.push({ name: RouteName.NOTIFY_CONFIG_NEW });
 }
 </script>

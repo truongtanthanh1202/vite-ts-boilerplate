@@ -6,3 +6,4 @@ export { default as PlusIcon } from './PlusIcon.vue';
 export { default as ReloadIcon } from './ReloadIcon.vue';
 export { default as SearchOutlineIcon } from './SearchOutlineIcon.vue';
 export { default as BackIcon } from './BackIcon.vue';
+export { default as CheveronIcon } from './CheveronIcon.vue';

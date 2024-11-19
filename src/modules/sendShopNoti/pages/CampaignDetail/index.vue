@@ -124,7 +124,7 @@ onMounted(() => {
 });
 
 function handleBack() {
-  router.back();
+  router?.back();
 }
 
 function handleEditCampaign() {

@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { RadioButton, RadioGroup, Form, FormItem, Input } from 'ant-design-vue';
+import { RadioButton, RadioGroup, Input } from 'ant-design-vue';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
@@ -32,3 +32,5 @@ import { ref } from 'vue';
 
 const tab = ref<number>();
 </script>
+
+<style scoped lang="scss" src="./styles.scss"></style>

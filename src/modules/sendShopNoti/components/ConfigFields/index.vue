@@ -4,15 +4,20 @@
     <div class="w-[50%] overflow-hidden flex flex-col gap-4">
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Loại shop</div>
-        <Select placeholder="Chọn loại shop" class="w-full" />
+        <Select placeholder="Chọn loại shop" mode="multiple" :show-arrow="true" class="w-full" />
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Khu vực</div>
-        <Select placeholder="Chọn khu vực" class="w-full" />
+        <Select placeholder="Chọn khu vực" mode="multiple" :show-arrow="true" class="w-full" />
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Áp dụng với shop có địa chỉ đăng ký tại Quận/Huyện</div>
-        <Select placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Quận/Huyện" class="w-full" />
+        <Select
+          placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Quận/Huyện"
+          mode="multiple"
+          :show-arrow="true"
+          class="w-full"
+        />
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Shop có đơn lấy thành công từ ngày</div>
@@ -32,17 +37,27 @@
           <div class="font-medium text-ghtk hover:underline cursor-pointer">Tải file mẫu</div>
         </div>
         <div class="flex items-center gap-2.5">
-          <Button class="text-ghtk font-medium border-ghtk">Choose file</Button>
+          <Button class="text-ghtk font-medium border-ghtk h-9">Choose file</Button>
           <div class="text-[#7A7A7A]">Chưa có file</div>
         </div>
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Áp dụng với shop có địa chỉ đăng ký tại Tỉnh</div>
-        <Select placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Tỉnh" class="w-full" />
+        <Select
+          placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Tỉnh"
+          mode="multiple"
+          :show-arrow="true"
+          class="w-full"
+        />
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Áp dụng với shop có địa chỉ đăng ký tại Phường/Xã</div>
-        <Select placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Phường/Xã" class="w-full" />
+        <Select
+          placeholder="Chọn khu vực shop có địa chỉ đăng ký tại Phường/Xã"
+          mode="multiple"
+          :show-arrow="true"
+          class="w-full"
+        />
       </div>
       <div>
         <div class="text-[#5c5c5c] font-medium mb-1">Áp dụng với shop đăng ký từ ngày đến ngày</div>
@@ -59,3 +74,5 @@
 <script setup lang="ts">
 import { Select, DatePicker, Button } from 'ant-design-vue';
 </script>
+
+<style scoped lang="scss" src="./styles.scss"></style>
