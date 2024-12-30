@@ -10,12 +10,12 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/:pathMatch(.*)*',
-    name: RouteName.NotFound,
+    name: RouteName.NOT_FOUND,
     component: NotFound,
   },
   {
     path: '',
-    name: RouteName.Homepage,
+    name: RouteName.HOMEPAGE,
     component: Homepage,
     meta: { layout: 'defaultNoHeader' },
   },
