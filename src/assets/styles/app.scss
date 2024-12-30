@@ -1,7 +1,7 @@
-@import './libs/tailwind';
-@import './libs/antd';
-@import './common/general';
-@import './common/fonts';
+@use './libs/tailwind';
+@use './libs/antd';
+@use './common/general';
+@use './common/fonts';
 
 // Override base SVG style to work with Ant Design
 svg {

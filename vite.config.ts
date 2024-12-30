@@ -6,7 +6,7 @@ import svgLoader from 'vite-svg-loader';
 const ENV_PATH = './env';
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, ENV_PATH) };
+  const env = { ...process.env, ...loadEnv(mode, ENV_PATH) };
 
   return defineConfig({
     plugins: [
@@ -25,7 +25,16 @@ export default ({ mode }) => {
     },
     envDir: resolve(__dirname, ENV_PATH),
     server: {
-      port: parseInt(process.env.VITE_APP_PORT) || 3000,
+      port: parseInt(env.VITE_APP_PORT) || 3000,
+    },
+    css: {
+      // https://sass-lang.com/documentation/breaking-changes/legacy-js-api/
+      preprocessorOptions: {
+        scss: {
+          api: 'legacy',
+          silenceDeprecations: ['legacy-js-api'],
+        },
+      },
     },
   });
 };
