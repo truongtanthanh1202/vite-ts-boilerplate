@@ -1,3 +1,5 @@
+import JSONbig from 'json-bigint';
+
 export const asciify = (sstr: string, force: boolean = false) => {
   let str = sstr;
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -20,17 +22,17 @@ export const asciify = (sstr: string, force: boolean = false) => {
   return str;
 };
 
-export const jsonDecode = (str) => {
+export const jsonDecode = (str: any) => {
   try {
-    return JSON.parse(str);
+    return JSONbig({ storeAsString: true }).parse(str);
   } catch (error) {
     return null;
   }
 };
 
-export const jsonEncode = (data) => {
+export const jsonEncode = (data: any) => {
   try {
-    return JSON.stringify(data);
+    return JSONbig({ storeAsString: true }).stringify(data);
   } catch (error) {
     return null;
   }

@@ -1,9 +1,5 @@
-<script setup lang="ts">
-import { RouteName } from '@/shared/constants';
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
-    <router-link :to="{ name: RouteName.NewRegistation }">Go go shop</router-link>
-  </div>
+  <div class="p-2">Hello world</div>
 </template>

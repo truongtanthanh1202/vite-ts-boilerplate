@@ -1,9 +1,10 @@
 import axios, { AxiosError, AxiosResponse, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { message } from 'ant-design-vue';
 
 import { IResponse } from '../interfaces';
 import { authService } from '@/services';
 import { isNotifyWhenFail, jsonDecode } from '@/helpers';
-import { message } from 'ant-design-vue';
+import { getAppAccessToken, removeAppToken, setAppToken } from '@/core/auth';
 
 interface ConfigInstance {
   setAuthorizationFn?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig;
@@ -20,7 +21,7 @@ interface Constructor {
 export class BaseClient {
   private isRefreshing = false;
   private failedQueue: any[] = [];
-  baseURL: string = '';
+  baseURL = '';
   headers: any = {};
   noTransform = false;
   withActionRefresh = false;
@@ -47,8 +48,12 @@ export class BaseClient {
   }
 
   private rejectErrorAndClearToken(error: AxiosError) {
+    removeAppToken();
+
     if (this.withActionLogout) {
-      //
+      window.location.href = `/login?returnUrl=${encodeURIComponent(
+        window.location.href.replace(window.location.origin, ''),
+      )}`;
     }
 
     return this.transformError(error);
@@ -86,7 +91,7 @@ export class BaseClient {
 
   create({ setAuthorizationFn }: ConfigInstance = {}) {
     const defaultSetAuthorizationFn = (config) => {
-      const token: string = 'token';
+      const token = getAppAccessToken();
 
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
@@ -103,11 +108,11 @@ export class BaseClient {
     });
 
     api.interceptors.request.use((config) => {
-      config.transformResponse = [(data) => data];
-
       if (!config.headers) {
         return config;
       }
+
+      config.transformResponse = [(data) => data];
 
       if (setAuthorizationFn) {
         return setAuthorizationFn(config);
@@ -121,7 +126,6 @@ export class BaseClient {
     api.interceptors.response.use(
       (response: AxiosResponse): any => {
         response.data = jsonDecode(response.data);
-
         if (isNotifyWhenFail(response)) {
           message.error(response.data?.message);
         }
@@ -130,9 +134,9 @@ export class BaseClient {
       },
       async (error: AxiosError) => {
         const originalRequest: any = error.config;
+        const statusCode: any = error?.response?.status;
         const errorResponse: any = error?.response || {};
         errorResponse.data = jsonDecode(errorResponse.data);
-        const statusCode: any = error?.response?.status;
 
         if (isNotifyWhenFail(errorResponse) && [422, 400, 403, 402].includes(statusCode)) {
           message.error(errorResponse.data?.message);
@@ -146,13 +150,23 @@ export class BaseClient {
           return this.transformError(error);
         }
 
+        // Prevent refesh token
+        if (errorResponse?.config?.offRefreshToken) {
+          return this.transformError(error);
+        }
+
+        // Only handle when status == 401
+        if (statusCode !== 401) {
+          return this.transformError(error);
+        }
+
         // Clear token and throw error when retried
         if (originalRequest._retry) {
           return this.rejectErrorAndClearToken(error);
         }
 
         // If refresh token is not valid and server response status == 401
-        if (originalRequest.url === 'auth/refresh-token') {
+        if (originalRequest.url === 'v1/auth/refresh-token') {
           return this.rejectErrorAndClearToken(error);
         }
 
@@ -174,22 +188,17 @@ export class BaseClient {
         this.isRefreshing = true;
 
         // Call request refresh token
-        const res = await authService
-          .refreshToken()
-          .catch((err: AxiosError) => {
-            this.processQueue(err);
-            return this.rejectErrorAndClearToken(err);
-          })
-          .finally(() => {
-            this.isRefreshing = false;
-          });
+        const res = await authService.refreshToken().finally(() => (this.isRefreshing = false));
 
-        if (res && res?.success) {
-          this.processQueue(null, res.payload.access_token);
-          return Promise.resolve(api(originalRequest));
+        if (res.error) {
+          this.processQueue(error);
+          return this.rejectErrorAndClearToken(error);
         }
 
-        return this.rejectErrorAndClearToken(error);
+        this.processQueue(null, res.data?.access_token);
+        setAppToken(res.data);
+
+        return Promise.resolve(api(originalRequest));
       },
     );
 
