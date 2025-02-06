@@ -27,10 +27,10 @@ export const authLogout = async (): Promise<void> => {
   try {
     await ghtkAuth.signOut({
       revokeAccessToken: true,
-      postLogoutRedirectUri: `${oidc.authnUrl}/sign-out?continue=${import.meta.env.VITE_APP_URL}`,
+      postLogoutRedirectUri: `${oidc.authnUrl}/sign-out?continue=${window.location.origin}`,
     });
   } catch (e) {
-    window.location.href = `${oidc.authnUrl}/sign-out?continue=${import.meta.env.VITE_APP_URL}`;
+    window.location.href = `${oidc.authnUrl}/sign-out?continue=${window.location.origin}`;
   } finally {
     localStorage.clear();
   }
