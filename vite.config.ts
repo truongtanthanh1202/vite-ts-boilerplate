@@ -27,14 +27,5 @@ export default ({ mode }) => {
     server: {
       port: parseInt(env.VITE_APP_PORT) || 3000,
     },
-    css: {
-      // https://sass-lang.com/documentation/breaking-changes/legacy-js-api/
-      preprocessorOptions: {
-        scss: {
-          api: 'legacy',
-          silenceDeprecations: ['legacy-js-api'],
-        },
-      },
-    },
   });
 };
