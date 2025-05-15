@@ -26,3 +26,4 @@ dist-ssr
 yarn.lock
 .env
 configure
+tsconfig.tsbuildinfo
