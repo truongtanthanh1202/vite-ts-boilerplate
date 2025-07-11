@@ -1,0 +1,8 @@
+@layer theme;
+@import 'tailwindcss/theme.css' layer(theme);
+
+@theme {
+  --color-ghtk: #00904a;
+}
+
+@import 'tailwindcss/utilities.css'; // don't use layer(utilities) because it make can't overwrite ant
