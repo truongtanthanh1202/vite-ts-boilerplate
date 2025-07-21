@@ -6,9 +6,13 @@
   ],
   "rules": {
     "at-rule-no-unknown": null,
-    "at-rule-no-deprecated": [true, { "ignoreAtRules": ["/^view/", "apply"] }],
-    "scss/at-rule-no-unknown": null,
-    "comment-empty-line-before": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["extends", "tailwind"]
+      }
+    ],
+    "comment-empty-line-before": "never",
     "rule-empty-line-before": [
       "always",
       {
@@ -23,9 +27,8 @@
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["deep", "export"]
+        "ignorePseudoClasses": ["deep"]
       }
-    ],
-    "property-no-unknown": null
+    ]
   }
 }
