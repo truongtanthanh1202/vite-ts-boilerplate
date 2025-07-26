@@ -11,3 +11,8 @@ html {
 body {
   font-family: var(--font-family-base);
 }
+
+// Override base SVG style to work with Ant Design
+svg {
+  vertical-align: initial;
+}
