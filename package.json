@@ -27,12 +27,12 @@
     "json-bigint": "^1.0.0",
     "lodash-es": "^4.17.21",
     "pinia": "^3.0.3",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.1.16",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.15",
+    "@tailwindcss/postcss": "^4.1.16",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.18.12",
     "@typescript-eslint/parser": "^8.46.2",
@@ -57,7 +57,7 @@
     "vite": "^7.1.11",
     "vite-svg-loader": "^5.1.0",
     "vue-eslint-parser": "^10.2.0",
-    "vue-tsc": "^3.1.1"
+    "vue-tsc": "^3.1.2"
   },
   "lint-staged": {
     "*.{js,cjs,ts,vue}": [
