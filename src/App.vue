@@ -1,5 +1,5 @@
 <template>
-  <ConfigProvider :theme="theme">
+  <ConfigProvider :theme="theme" :locale="ANT_LOCALE">
     <router-view />
   </ConfigProvider>
 </template>
@@ -7,5 +7,5 @@
 <script setup lang="ts">
 import { ConfigProvider } from 'ant-design-vue';
 
-import { theme } from '@/shared/constants';
+import { ANT_LOCALE, theme } from '@/shared/constants';
 </script>
